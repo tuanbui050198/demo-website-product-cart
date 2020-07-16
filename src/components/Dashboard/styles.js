@@ -12,7 +12,7 @@ const styles = (theme) => ({
     }),
   },
   shiftLeft: {
-    marginLeft: -240,
+    // marginLeft: 240,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.leavingScreen,

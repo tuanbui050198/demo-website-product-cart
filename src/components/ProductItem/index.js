@@ -7,14 +7,14 @@ import * as text from "../../constants/text";
 import styles from "./styles";
 
 class ProductItem extends Component {
-  onhandleChange = (e) => {
-    var target = e.target;
-    var name = target.name;
-    var value = target.type === "checkbox" ? target.checked : target.value;
-    this.setState({
-      [name]: value,
-    });
-  };
+  // onhandleChange = (e) => {
+  //   var target = e.target;
+  //   var name = target.name;
+  //   var value = target.type === "checkbox" ? target.checked : target.value;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  // };
 
   showRatings(rating) {
     var result = [];

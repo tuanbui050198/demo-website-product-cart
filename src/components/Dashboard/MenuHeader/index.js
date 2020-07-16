@@ -15,9 +15,13 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { ROUTES_PRODUCT } from "../../../constants/index";
+import { ROUTES_PRODUCT } from "../../../constants/Routes";
 import styles from "./styles";
-import * as text from '../../../constants/text';
+import * as text from "../../../constants/text";
+import { withRouter } from "react-router-dom";
+import { bindActionCreators, compose } from "redux";
+import * as taskActions from '../../../actions/task';
+import {connect} from 'react-redux';
 
 const menuId = "primary-search-account-menu";
 
@@ -29,7 +33,6 @@ class MenuHeader extends Component {
     this.state = {
       mobileMoreAnchorEl: null,
       anchorEl: null,
-      txtSearch: '',
     };
   }
 
@@ -63,8 +66,8 @@ class MenuHeader extends Component {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
-      > 
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+      >
+        <MenuItem onClick={this.handleLogout}>
           <IconButton
             aria-label="account of currssent user"
             aria-controls="primary-search-account-menu"
@@ -73,7 +76,8 @@ class MenuHeader extends Component {
           >
             <AccountCircle />
           </IconButton>
-          <p className="txt-profile">{text.TXT_PROFILE}</p>
+            <p className="txt-profile">{text.TXT_PROFILE}</p>
+          
         </MenuItem>
       </Menu>
     );
@@ -83,6 +87,13 @@ class MenuHeader extends Component {
     this.setState({
       anchorEl: null,
     });
+  };
+
+  handleLogout = () => {
+    const {history} = this.props;
+    if(history) {
+      history.push('/login');
+    }
   };
 
   renderMenu = () => {
@@ -98,28 +109,27 @@ class MenuHeader extends Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose} >{text.TXT_PROFILE}</MenuItem>
+        <MenuItem onClick={this.handleLogout}>{text.TXT_PROFILE}</MenuItem>
       </Menu>
     );
   };
 
   handleToggleSidebar = () => {
-    const {showSidebar, onToggleSidebar} = this.props;
-    if(onToggleSidebar) {
+    const { showSidebar, onToggleSidebar } = this.props;
+    if (onToggleSidebar) {
       onToggleSidebar(!showSidebar);
     }
-  }
+  };
 
-  onhandleChange = (e) => {
-    var value = e.target.value;
-    this.setState({
-      txtSearch : value
-    });
+  handeFilter = e => {
+    const {value} = e.target;
+    const {taskActionCreators} = this.props;
+    const {filterProduct} = taskActionCreators;
+    filterProduct(value);
   }
 
   render() {
     const { classes, name } = this.props;
-    const {txtSearch} = this.state;
     return (
       <div className={classes.grow}>
         <AppBar position="static">
@@ -142,20 +152,22 @@ class MenuHeader extends Component {
               </div>
               <InputBase
                 placeholder="Search…"
+                onChange={this.handeFilter}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
-                value={txtSearch}
-                onChange={this.onhandleChange}
               />
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge color="secondary">
-                  <Link to={ROUTES_PRODUCT[2].path} className={classes.linkCart}>
+                  <Link
+                    to={ROUTES_PRODUCT[2].path}
+                    className={classes.linkCart}
+                  >
                     <ShoppingCartIcon className={classes.cartIcon} />
                   </Link>
                 </Badge>
@@ -168,7 +180,8 @@ class MenuHeader extends Component {
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle className={classes.profileIcon}/> {text.TXT_ACCOUNT}
+                <AccountCircle className={classes.profileIcon} />{" "}
+                {text.TXT_ACCOUNT}
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
@@ -196,6 +209,22 @@ MenuHeader.propTypes = {
   name: PropTypes.string,
   showSidebar: PropTypes.bool,
   onToggleSidebar: PropTypes.func,
+  history: PropTypes.object,
 };
 
-export default withStyles(styles)(MenuHeader);
+const mapStateToProps = null;
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    taskActionCreators: bindActionCreators(taskActions, dispatch),
+  }
+};
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(
+  withConnect,
+  withStyles(styles),
+  withRouter,
+)(MenuHeader);
+// export default withStyles(styles)(withRouter(MenuHeader));

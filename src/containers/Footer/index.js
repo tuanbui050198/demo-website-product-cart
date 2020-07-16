@@ -2,7 +2,7 @@ import { withStyles } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import React, { Component } from "react";
-import iconZalo from "../../assets/images/icon-zalo.png";
+import iconZalo from "../../assets/images/iconZalo.png";
 import * as text from "../../constants/text";
 import styles from "./styles";
 

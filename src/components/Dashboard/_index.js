@@ -24,33 +24,23 @@ class Dashboard extends Component {
     const { classes, children, name, showSidebar } = this.props;
     return (
       <div className={classes.products}>
-        <div className="all-page">
-          <div className="menu-sidebar-header">
-            <MenuHeader
-              name={name}
-              showSidebar={showSidebar}
-              onToggleSidebar={this.handleToggleSidebar}
-              className="menu-header"
-            />
-            <div className={(classes.wrapper, "wrapper menu-sidebar")}>
-              <MenuSidebar
-                showSidebar={showSidebar}
-                onToggleSidebar={this.handleToggleSidebar}
-                className="item-menu-sidebar"
-              />
-            </div>
-          </div>
-
-          <div className="wrapperContent">
-            <div
-              // className="children-content"
-              className={cn(classes.wrapperContent, {
-                [classes.shiftLeft]: showSidebar === false,
-                "img-slick-breadcrumb": showSidebar === true,
-              })}
-            >
-              {children}
-            </div>
+        <MenuHeader
+          name={name}
+          showSidebar={showSidebar}
+          onToggleSidebar={this.handleToggleSidebar}
+        />
+        <div className={classes.wrapper}>
+          <MenuSidebar
+            showSidebar={showSidebar}
+            onToggleSidebar={this.handleToggleSidebar}
+          />
+          <div
+            className={cn(classes.wrapperContent, {
+              [classes.shiftLeft]: showSidebar === false,
+              "img-slick-breadcrumb": showSidebar === true,
+            })}
+          >
+            {children}
           </div>
         </div>
       </div>
@@ -83,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect, withStyles(styles))(Dashboard);
+export default compose( withConnect,withStyles(styles),)(Dashboard);

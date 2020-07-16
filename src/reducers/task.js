@@ -1,5 +1,5 @@
-import * as productConstants from '../constants/task';
-import { toastError } from '../helpers/toastHelper';
+import * as productConstants from "../constants/task";
+import { toast } from "react-toastify";
 
 const initialState = {
   listProducts: [],
@@ -14,22 +14,22 @@ const reducer = (state = initialState, action) => {
       };
     }
     case productConstants.FETCH_PRODUCT_SUCCESS: {
-      const {data} = action.payload;
+      const { data } = action.payload;
       return {
         ...state,
         listProducts: data,
       };
     }
     case productConstants.FETCH_PRODUCT_FAILED: {
-      const {error} = action.payload;
-      toastError(error);
+      const { error } = action.payload;
+      toast.error(error);
       return {
         ...state,
         listProducts: [],
       };
     }
     case productConstants.FILTER_PRODUCT_SUCCESS: {
-      const {data} = action.payload;
+      const { data } = action.payload;
       return {
         ...state,
         listProducts: data,

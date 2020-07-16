@@ -66,10 +66,26 @@ class Carts extends Component {
     return result;
   };
 
+  onBuyProduct = () => {
+    const { cartActionCreators } = this.props;
+    const { paymentProduct } = cartActionCreators;
+    paymentProduct();
+  };
+
+  onPrintBill = () => {
+    window.print();
+  };
+
   showTotalAmount = (cart) => {
     var result = null;
     if (cart.length > 0) {
-      result = <CartResult cart={cart} />;
+      result = (
+        <CartResult
+          cart={cart}
+          onBuyProduct={this.onBuyProduct}
+          printBill={this.onPrintBill}
+        />
+      );
     }
     return result;
   };

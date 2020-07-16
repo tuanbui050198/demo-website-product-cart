@@ -2,22 +2,16 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
 import styles from "./styles";
 import { Route } from "react-router-dom";
-import Dashboard from "../../../components/Dashboard";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-class LayoutRoute extends Component {
+class LayoutLoginRoutes extends Component {
   render() {
-    const { component: MyComponent, ...remainProps } = this.props;
+    const {component : MyComponent, ...remainProps} = this.props;
     return (
       <Route
         {...remainProps}
         render={(routeProps) => {
-          return (
-            <div>
-              <Dashboard {...remainProps}>
-                <MyComponent {...routeProps} />
-              </Dashboard>
-            </div>
+          return (<MyComponent {...routeProps} />
           );
         }}
       />
@@ -25,11 +19,11 @@ class LayoutRoute extends Component {
   }
 }
 
-LayoutRoute.propTypes = {
+LayoutLoginRoutes.propTypes = {
   path: PropTypes.string,
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   exact: PropTypes.bool,
   name: PropTypes.string,
-};
+}
 
-export default withStyles(styles)(LayoutRoute);
+export default withStyles(styles)(LayoutLoginRoutes);

@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import * as text from "../../../constants/text";
 
 class CartItem extends Component {
-
   render() {
     const {
       item,
@@ -11,7 +10,7 @@ class CartItem extends Component {
       onSumQuantity,
       onSubtractionQuantity,
     } = this.props;
-    const { image, name, price, quantity} = item;
+    const { image, name, price, quantity } = item;
     return (
       <tr>
         <th scope="row">
